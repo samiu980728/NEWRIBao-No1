@@ -12,8 +12,10 @@
 #import "ZRBMainWKWebView.h"
 #import "ZRBMessageVView.h"
 #import <Masonry.h>
+#import "SecondaryMessageViewController.h"
 
 @interface ZRBMainViewController : UIViewController
+<ZRBPushToWebViewDelegate>
 
 @property (nonatomic, strong) ZRBMainVIew * MainView;
 

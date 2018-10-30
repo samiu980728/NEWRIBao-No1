@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "ZRBMainViewController.h"
 #import "ZRBMyMessageViewController.h"
+#import "ZRBPushMainNavigationViewController.h"
+
 @interface AppDelegate ()
 
 @end
@@ -19,7 +21,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    self.window.rootViewController = [[ZRBMainViewController alloc] init];
+    
+    ZRBMainViewController * mainViewController = [[ZRBMainViewController alloc] init];
+    
+    ZRBPushMainNavigationViewController * fullScreenNavigationViewCOntroller = [[ZRBPushMainNavigationViewController alloc] initWithRootViewController:mainViewController];
+    
+    self.window.rootViewController = fullScreenNavigationViewCOntroller;
+    
+    [self.window makeKeyAndVisible];
     
     return YES;
 }

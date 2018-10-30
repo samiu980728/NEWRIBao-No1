@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		09F23F6C62672E9527CFB4B8 /* libPods-NEWRIBAO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C75D44218C3E0831B38869C /* libPods-NEWRIBAO.a */; };
+		673F78BB218745A60085F745 /* ZRBPushMainNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 673F78BA218745A60085F745 /* ZRBPushMainNavigationViewController.m */; };
 		673FBE662185E387000CA6BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 673FBE652185E387000CA6BD /* AppDelegate.m */; };
 		673FBE692185E387000CA6BD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 673FBE682185E387000CA6BD /* ViewController.m */; };
 		673FBE6C2185E387000CA6BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 673FBE6A2185E387000CA6BD /* Main.storyboard */; };
@@ -28,6 +29,8 @@
 		673FBEF921860C0B000CA6BD /* ZRBMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 673FBEF821860C0B000CA6BD /* ZRBMainViewController.m */; };
 		674418172186B2B80075BCD3 /* 122.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 674418162186B2B80075BCD3 /* 122.jpg */; };
 		674418192186B2C60075BCD3 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 674418182186B2C60075BCD3 /* 1.png */; };
+		67627A9521886073007886CD /* ZRBRequestJSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 67627A9421886073007886CD /* ZRBRequestJSONModel.m */; };
+		67627A9921888B20007886CD /* ZRBMessageDelegateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 67627A9821888B20007886CD /* ZRBMessageDelegateManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,8 @@
 
 /* Begin PBXFileReference section */
 		0DCD996643A0C5AE81961D7E /* Pods-NEWRIBAO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NEWRIBAO.debug.xcconfig"; path = "Target Support Files/Pods-NEWRIBAO/Pods-NEWRIBAO.debug.xcconfig"; sourceTree = "<group>"; };
+		673F78B9218745A60085F745 /* ZRBPushMainNavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZRBPushMainNavigationViewController.h; sourceTree = "<group>"; };
+		673F78BA218745A60085F745 /* ZRBPushMainNavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBPushMainNavigationViewController.m; sourceTree = "<group>"; };
 		673FBE612185E387000CA6BD /* NEWRIBAO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NEWRIBAO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		673FBE642185E387000CA6BD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		673FBE652185E387000CA6BD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -87,6 +92,10 @@
 		673FBEF821860C0B000CA6BD /* ZRBMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBMainViewController.m; sourceTree = "<group>"; };
 		674418162186B2B80075BCD3 /* 122.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 122.jpg; path = ../../../122.jpg; sourceTree = "<group>"; };
 		674418182186B2C60075BCD3 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1.png; path = "../../../日报图片/1.png"; sourceTree = "<group>"; };
+		67627A9321886073007886CD /* ZRBRequestJSONModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZRBRequestJSONModel.h; sourceTree = "<group>"; };
+		67627A9421886073007886CD /* ZRBRequestJSONModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBRequestJSONModel.m; sourceTree = "<group>"; };
+		67627A9721888B20007886CD /* ZRBMessageDelegateManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZRBMessageDelegateManager.h; sourceTree = "<group>"; };
+		67627A9821888B20007886CD /* ZRBMessageDelegateManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBMessageDelegateManager.m; sourceTree = "<group>"; };
 		7AE6F0FB462B09A7B3D74B4E /* Pods-NEWRIBAO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NEWRIBAO.release.xcconfig"; path = "Target Support Files/Pods-NEWRIBAO/Pods-NEWRIBAO.release.xcconfig"; sourceTree = "<group>"; };
 		7C75D44218C3E0831B38869C /* libPods-NEWRIBAO.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NEWRIBAO.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -117,6 +126,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		673F78B82187452D0085F745 /* ZRBNavigationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				673F78B9218745A60085F745 /* ZRBPushMainNavigationViewController.h */,
+				673F78BA218745A60085F745 /* ZRBPushMainNavigationViewController.m */,
+			);
+			path = ZRBNavigationViewController;
+			sourceTree = "<group>";
+		};
 		673FBE582185E387000CA6BD = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +160,7 @@
 		673FBE632185E387000CA6BD /* NEWRIBAO */ = {
 			isa = PBXGroup;
 			children = (
+				67627A9621888AC6007886CD /* Manager */,
 				674418152186B29B0075BCD3 /* Image */,
 				673FBE9C2185E5E7000CA6BD /* ZRBNewsMessageView */,
 				673FBE992185E5AF000CA6BD /* ZRBMyMessageView */,
@@ -199,6 +218,7 @@
 		673FBE982185E58F000CA6BD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				673F78B82187452D0085F745 /* ZRBNavigationViewController */,
 				673FBEE32185F759000CA6BD /* ZRBMainWKWebView */,
 				673FBEDF2185F720000CA6BD /* ZRBNewsTableViewCell */,
 				673FBEE72185F7C5000CA6BD /* ZRBMainVIew.h */,
@@ -311,6 +331,8 @@
 		673FBEEC2185FA9D000CA6BD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				67627A9321886073007886CD /* ZRBRequestJSONModel.h */,
+				67627A9421886073007886CD /* ZRBRequestJSONModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -329,6 +351,15 @@
 				674418162186B2B80075BCD3 /* 122.jpg */,
 			);
 			path = Image;
+			sourceTree = "<group>";
+		};
+		67627A9621888AC6007886CD /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				67627A9721888B20007886CD /* ZRBMessageDelegateManager.h */,
+				67627A9821888B20007886CD /* ZRBMessageDelegateManager.m */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		B120F3DC320C5F1F208F2B46 /* Frameworks */ = {
@@ -513,11 +544,14 @@
 				673FBEDE2185F6B6000CA6BD /* ZRBMainJSONModel.m in Sources */,
 				673FBED52185F5C6000CA6BD /* ZRBMessageVView.m in Sources */,
 				673FBEE22185F74B000CA6BD /* ZRBNewsTableViewCell.m in Sources */,
+				673F78BB218745A60085F745 /* ZRBPushMainNavigationViewController.m in Sources */,
 				673FBE662185E387000CA6BD /* AppDelegate.m in Sources */,
 				673FBEE62185F777000CA6BD /* ZRBMainWKWebView.m in Sources */,
 				673FBED82185F639000CA6BD /* ZRBMyMessageViewController.m in Sources */,
 				673FBEDB2185F661000CA6BD /* ZRBAnalysisJSONModel.m in Sources */,
 				673FBEE92185F7C5000CA6BD /* ZRBMainVIew.m in Sources */,
+				67627A9521886073007886CD /* ZRBRequestJSONModel.m in Sources */,
+				67627A9921888B20007886CD /* ZRBMessageDelegateManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

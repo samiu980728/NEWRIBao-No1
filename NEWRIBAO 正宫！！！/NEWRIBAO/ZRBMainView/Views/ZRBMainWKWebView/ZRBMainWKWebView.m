@@ -7,128 +7,191 @@
 //
 
 #import "ZRBMainWKWebView.h"
+//@class SecondaryMessageViewController;
+//@protocol ZRBGiveJSONModelMessageToViewDelegate
+//
+//@end
 
-@implementation ZRBMainWKWebView
+@implementation ZRBMainWKWebView 
 
 - (void)createAndGetJSONModelWKWebView
 {
-    NSString *testUrlStr = [NSString stringWithFormat:@"https://news-at.zhihu.com/api/4/news/9699382"];
     
-    //拼接中文参数
-    testUrlStr = [testUrlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
-    NSURL *testUrl = [NSURL URLWithString:testUrlStr];
-    NSURLRequest *testRequest = [NSURLRequest requestWithURL:testUrl];
-    NSURLSession *testSession = [NSURLSession sharedSession];
-    NSURLSessionDataTask *testDataTask = [testSession dataTaskWithRequest:testRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error == nil) {
-            _obj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            //使用NSJSONReadingMutableContainers，则返回的对象是可变的，NSMutableDictionary
-            
-            //            NSLog(@"x--%@---", _obj);
-            //TotalJSONModel *totalJSONModel = [[TotalJSONModel alloc] initWithDictionary:obj error:nil];
-            //getNewsJSONModel * newsModel = [[getNewsJSONModel alloc] initWithDictionary:_obj error:nil];
-            
-            _JSONModelMut = [[NSMutableArray alloc] init];
-            
-//            for (int i = 0; i < newsModel.section.count; i++) {
-//                sectionJSONModel * sectionModel = [[sectionJSONModel alloc] initWithDictionary:_obj[@"section"][i] error:nil];
-//                if ( sectionModel ){
-//                    //[JSONModelMut addObject:sectionModel];
-//                }
-//            }
-            
-            // NSLog(@"newsModel.section.count == %li",newsModel.section.count);
-            
-            //NSLog(@"obj === =  %@",_obj);
-            
-            [_JSONModelMut addObject:_obj];
-            
-            NSString * str = [NSString stringWithFormat:@"%@",_obj];
-            
-            //NSLog(@"str ========  %@=======",str);
-        }
-        
-        NSDictionary * dict = [[NSDictionary alloc] initWithDictionary:_obj];
-        NSNotification * dictNotification = [NSNotification notificationWithName:@"Dicttongzhi" object:nil userInfo:dict];
-        [[NSNotificationCenter defaultCenter] postNotification:dictNotification];
-        
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            _webView = [[WKWebView alloc] initWithFrame:self.frame];
-            _webView.UIDelegate = self;
-            _webView.navigationDelegate = self;
-            [self addSubview:_webView];
-            
-            [_webView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(self);
-            }];
-            
-            //[_webView loadHTMLString:@"https://news-at.zhihu.com/api/4/news/3892357" baseURL:nil];
-            //这是一个H5界面 不能直接打开 需要用一个方法
-            NSURL * fileURL = [NSURL URLWithString:@"https://news-at.zhihu.com/api/4/news/9699382"];
-            
-            
-            
-            // NSString * modelStr = [NSString ]
-            
-            _modelStr = [NSString stringWithFormat:@"%@",[dict objectForKey:@"body"]];
-            
-            NSLog(@"_modelStr === ==== %@",_modelStr);
-            
-            //现在问题是  还是不能弄出来 web界面
-            //还有 要添加手势  这个学一下
-            
-            
-            [_webView loadHTMLString:_modelStr baseURL:nil];
-            
-            //            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://news-at.zhihu.com/api/4/news/3892357"]]];
-            
-            NSLog(@"https://news-at.zhihu.com/api/4/news/9699382-----=-=-=-=-=-");
-            
-            //            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.baidu.com"]]];
-            
-            
-            
-            //添加手势
+//    _webView = [[WKWebView alloc] initWithFrame:self.frame];
+//    _webView.UIDelegate = self;
+//    _webView.navigationDelegate = self;
+//    [self addSubview:_webView];
 //
-            
-        });
-        
-        
-        
-        //hongyu改好了！~！！！！！！！！！！！！~~~~~~~~~
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        //下一步 新建一个Controller 把 didselectcell里面的数据 在那个controller里面打开
-        
-        
-    }];
-    
-    [testDataTask resume];
+//    [_webView mas_makeConstraints:^(MASConstraintMaker *make) {
+//                        make.edges.equalTo(self);
+//    }];
+//
+//
+//        NSLog(@"ZRBMainWKWebView 中的 modelStr ======= %@===== ",_modelStr);
+//
+//    [_webView loadHTMLString:_modelStr baseURL:nil];
     
 }
+    
+- (void)recieveNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Dicttongzhi:) name:@"Dicttongzhi" object:nil];
+}
 
-//- (void)recieveNotification
-//{
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Dicttongzhi:) name:@"Dicttongzhi" object:nil];
+- (void)Dicttongzhi:(NSNotification *)noti
+{
+    //NSLog(@"ZRBMainWKWebView 中的 modelStr ======= %@===== ",_modelStr);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+//        _modelStr = [[NSString alloc] init];
+        
+        _webView = [[WKWebView alloc] initWithFrame:self.frame];
+        
+        _webView.UIDelegate = self;
+        _webView.navigationDelegate = self;
+        
+        //这样肯定没有代理啊 你得 先创建一个Controller对象 再让这个对象的delegate = self
+        //如果代理在Controller里的话
+        
+        [self addSubview:_webView];
+        
+        [_webView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self);
+        }];
+        
+        
+        NSLog(@"ZRBMainWKWebView 中的 modelStr ======= %@===== ",_modelStr);
+        
+        [_webView loadHTMLString:_modelStr baseURL:nil];
+    });
+    
+    //NSLog(@"ZRBMainWKWebView 中的 modelStr ======= %@===== ",_modelStr);
+    
+    
+}
+        
+    
+        //底下的全部注释
+        
+        
+//    NSString *testUrlStr = [NSString stringWithFormat:@"https://news-at.zhihu.com/api/4/news/9699382"];
+//
+//    //拼接中文参数
+//    testUrlStr = [testUrlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//
+//    NSURL *testUrl = [NSURL URLWithString:testUrlStr];
+//    NSURLRequest *testRequest = [NSURLRequest requestWithURL:testUrl];
+//    NSURLSession *testSession = [NSURLSession sharedSession];
+//    NSURLSessionDataTask *testDataTask = [testSession dataTaskWithRequest:testRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//        if (error == nil) {
+//            _obj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+//            //使用NSJSONReadingMutableContainers，则返回的对象是可变的，NSMutableDictionary
+//
+//            //            NSLog(@"x--%@---", _obj);
+//            //TotalJSONModel *totalJSONModel = [[TotalJSONModel alloc] initWithDictionary:obj error:nil];
+//            //getNewsJSONModel * newsModel = [[getNewsJSONModel alloc] initWithDictionary:_obj error:nil];
+//
+//            _JSONModelMut = [[NSMutableArray alloc] init];
+//
+////            for (int i = 0; i < newsModel.section.count; i++) {
+////                sectionJSONModel * sectionModel = [[sectionJSONModel alloc] initWithDictionary:_obj[@"section"][i] error:nil];
+////                if ( sectionModel ){
+////                    //[JSONModelMut addObject:sectionModel];
+////                }
+////            }
+//
+//            // NSLog(@"newsModel.section.count == %li",newsModel.section.count);
+//
+//            //NSLog(@"obj === =  %@",_obj);
+//
+//            [_JSONModelMut addObject:_obj];
+//
+//            NSString * str = [NSString stringWithFormat:@"%@",_obj];
+//
+//            //NSLog(@"str ========  %@=======",str);
+//        }
+//
+//        NSDictionary * dict = [[NSDictionary alloc] initWithDictionary:_obj];
+//        NSNotification * dictNotification = [NSNotification notificationWithName:@"Dicttongzhi" object:nil userInfo:dict];
+//        [[NSNotificationCenter defaultCenter] postNotification:dictNotification];
+//
+//
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//
+//            _webView = [[WKWebView alloc] initWithFrame:self.frame];
+//            _webView.UIDelegate = self;
+//            _webView.navigationDelegate = self;
+//            [self addSubview:_webView];
+//
+//            [_webView mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.edges.equalTo(self);
+//            }];
+//
+//            //[_webView loadHTMLString:@"https://news-at.zhihu.com/api/4/news/3892357" baseURL:nil];
+//            //这是一个H5界面 不能直接打开 需要用一个方法
+//            NSURL * fileURL = [NSURL URLWithString:@"https://news-at.zhihu.com/api/4/news/9699382"];
+//
+//
+//
+//            // NSString * modelStr = [NSString ]
+//
+//            _modelStr = [NSString stringWithFormat:@"%@",[dict objectForKey:@"body"]];
+//
+//            NSLog(@"_modelStr === ==== %@",_modelStr);
+//
+//            //现在问题是  还是不能弄出来 web界面
+//            //还有 要添加手势  这个学一下
+//
+//
+//            [_webView loadHTMLString:_modelStr baseURL:nil];
+//
+//            //            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://news-at.zhihu.com/api/4/news/3892357"]]];
+//
+//            NSLog(@"https://news-at.zhihu.com/api/4/news/9699382-----=-=-=-=-=-");
+//
+//            //            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.baidu.com"]]];
+//
+//
+//
+//            //添加手势
+////
+//
+//        });
+//
+//
+//
+//        //hongyu改好了！~！！！！！！！！！！！！~~~~~~~~~
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//        //下一步 新建一个Controller 把 didselectcell里面的数据 在那个controller里面打开
+//
+//
+//    }];
+//
+//    [testDataTask resume];
+    
 //}
+
+
+
+
 //
 //- (void)Dicttongzhi:(NSNotification *)noti
 //{

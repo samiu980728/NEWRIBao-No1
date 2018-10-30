@@ -14,8 +14,14 @@
 #import <Masonry.h>
 #import "ZRBMainJSONModel.h"
 
-@interface ZRBMainVIew : UIView
 
+@protocol ZRBPushToWebViewDelegate <NSObject>
+
+- (void)pushToWKWebView;
+
+@end
+
+@interface ZRBMainVIew : UIView
 
 <UITableViewDelegate, UITableViewDataSource>
 //mainTableView
@@ -40,6 +46,9 @@
 
 @property (nonatomic, strong) NSMutableArray * imageMutArray;
 
+
+//设置代理
+@property (nonatomic, weak) id <ZRBPushToWebViewDelegate> delegate;
 
 //创建每个cell的推送显示  一个label 一个image
 @property (nonatomic, strong) ZRBNewsTableViewCell * newsTableViewCell;

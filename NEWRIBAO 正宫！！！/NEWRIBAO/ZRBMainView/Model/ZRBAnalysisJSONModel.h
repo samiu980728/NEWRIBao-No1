@@ -33,7 +33,7 @@
 
 @property (nonatomic, strong) StoriesJSONModel * storiesJSONModel;
 
-
+@property (nonatomic, strong) NSMutableArray * testUrlMutArray;
 
 //昨天
 @property (nonatomic, strong) NSString * testUrlStr1;

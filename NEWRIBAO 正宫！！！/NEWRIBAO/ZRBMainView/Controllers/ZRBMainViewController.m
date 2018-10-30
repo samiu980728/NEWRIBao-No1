@@ -14,11 +14,12 @@
 
 @implementation ZRBMainViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)viewDidLoad {    [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    self.title = @"今日新闻";
     
     //开启滑动返回功能代码
     if ( [self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)] ){
@@ -45,6 +46,8 @@
     
     [_MainView.leftNavigationButton addTarget:self action:@selector(pressLeftBarButton:) forControlEvents:UIControlEventTouchUpInside];
     
+    _MainView.delegate = self;
+    
     [self.view addSubview:_MainView];
     
     [_MainView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -54,17 +57,33 @@
     //    _mainWebView = [[mainWKWebView alloc] init];
     //
     //    [_mainWebView createWKWebView];
+    
+    
 }
 
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:animated];
-//    self.navigationController.navigationBar.translucent = NO;
-//    self.navigationItem.title = @"每日新闻";
-//
-//    UIBarButtonItem * leftBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"1.png"] style:UIBarButtonItemStyleDone target:self action:@selector(pressLeftBarButton:)];
-//    self.navigationItem.leftBarButtonItem = leftBarButton;
-//}
+- (void)pushToWKWebView
+{
+    //UIViewController * currentViewControlller = [self getCurrentVC];
+    
+    //现在的问题是 在这里设置断点  但是 不走 SecondaryMessageViewController.m文件中的viewDidLoad方法
+    SecondaryMessageViewController * secondMessageViewController = [[SecondaryMessageViewController alloc] init];
+    
+    
+    
+    //UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:secondMessageViewController];
+    
+    [self.navigationController pushViewController:secondMessageViewController animated:YES];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationItem.title = @"每日新闻";
+
+    UIBarButtonItem * leftBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"1.png"] style:UIBarButtonItemStyleDone target:self action:@selector(pressLeftBarButton:)];
+    self.navigationItem.leftBarButtonItem = leftBarButton;
+}
 
 - (void)pressLeftBarButton:(UIBarButtonItem *)leftBtn
 {

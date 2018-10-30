@@ -10,9 +10,18 @@
 #import <Masonry.h>
 #import <JSONModel.h>
 #import <WebKit/WebKit.h>
+
+//@class SecondaryMessageViewController;
+//@protocol ZRBGiveJSONModelMessageToViewDelegate
+//
+//@end
+
 @interface ZRBMainWKWebView : UIView
 
 <WKNavigationDelegate, WKUIDelegate, UIGestureRecognizerDelegate>
+
+
+
 @property (nonatomic, strong) WKWebView * webView;
 
 @property (nonatomic, strong) WKUserContentController * userContentController;

@@ -22,8 +22,18 @@
 - (void)AnalysisJSON
 {
     
+    
+    
+    
+    
+    
+    //这个用一个for循环  news/ 后面 把各个参数都存储到一个数组中 然后赋值即可
+    //把最新消息的 date 转化为 long 类型 然后 依次减一 形成之前的七天日期
+    
+    
     NSLog(@"-------------123213--------");
     _testUrlStr = @"https://news-at.zhihu.com/api/4/news/latest";
+    
     _testUrlStr = [_testUrlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     _testUrl = [NSURL URLWithString:_testUrlStr];

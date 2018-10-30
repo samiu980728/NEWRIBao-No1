@@ -207,13 +207,27 @@
     //        make.edges.equalTo(self);
     //    }];
     
-    UIViewController * currentViewControlller = [self getCurrentVC];
     
-    SecondaryMessageViewController * secondMessageViewController = [[SecondaryMessageViewController alloc] init];
     
-    //UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:secondMessageViewController];
+//    UIViewController * currentViewControlller = [self getCurrentVC];
+//
+//    //现在的问题是 在这里设置断点  但是 不走 SecondaryMessageViewController.m文件中的viewDidLoad方法
+//    SecondaryMessageViewController * secondMessageViewController = [[SecondaryMessageViewController alloc] init];
+//
+//    //UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:secondMessageViewController];
+//
+//    [currentViewControlller.navigationController pushViewController:secondMessageViewController animated:YES];
     
-    [currentViewControlller presentViewController:secondMessageViewController animated:YES completion:nil];
+    
+    
+    
+    if ( [_delegate respondsToSelector:@selector(pushToWKWebView)] ){
+        [_delegate pushToWKWebView];
+    }
+    
+    
+    //[currentViewControlller presentViewController:secondMessageViewController animated:YES completion:nil];
+    
     //    _mainWebView = [[mainWKWebView alloc] initWithFrame:self.frame];
     //
     //    [self addSubview:_mainWebView];
@@ -230,6 +244,15 @@
 {
     return 60;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if ( _analyJSONMutArray.count <= 1 ){
+        return 1;
+    }
+    return 30;
+}
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
