@@ -13,6 +13,9 @@
 #import "SecondaryMessageViewController.h"
 #import <Masonry.h>
 #import "ZRBMainJSONModel.h"
+#import "ZRBDetailsTableViewHeaderFooterView.h"
+#import "ZRBLoadMoreView.h"
+#import "ZRBCellModel.h"
 
 
 @protocol ZRBPushToWebViewDelegate <NSObject>
@@ -23,7 +26,7 @@
 
 @interface ZRBMainVIew : UIView
 
-<UITableViewDelegate, UITableViewDataSource>
+<UITableViewDelegate, UITableViewDataSource,ZRBGiveCellJSONMOdelToMainViewDelegate>
 //mainTableView
 @property (nonatomic, strong) UITableView * mainMessageTableView;
 
@@ -65,6 +68,22 @@
 //创建cell点击后的跳转页面
 @property (nonatomic, strong) ZRBMainWKWebView * mainWebView;
 
+//设置头视图
+@property (nonatomic, strong) ZRBDetailsTableViewHeaderFooterView * headerFooterView;
 
+//加载更多视图
+@property (nonatomic, strong) ZRBLoadMoreView * loadMoreView;
+@property (nonatomic, strong) NSMutableArray * modelArray;
+@property (nonatomic, assign) NSInteger cellTagInteger;
+
+//ZRBCellModel代理
+@property (nonatomic, strong) ZRBCellModel * cellJSONModel;
+//@property (nonatomic, weak) id <ZRBGiveJSONModelMessageToViewDelegate> JSONModelDelegate;
+
+//异步请求数据的方法
+
+
+//集成上拉刷新的方法
+- (void)setUpDownRefresh;
 
 @end

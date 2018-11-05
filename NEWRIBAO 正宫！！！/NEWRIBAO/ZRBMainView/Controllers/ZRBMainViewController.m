@@ -14,7 +14,8 @@
 
 @implementation ZRBMainViewController
 
-- (void)viewDidLoad {    [super viewDidLoad];
+- (void)viewDidLoad {
+    [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -57,6 +58,68 @@
     //    _mainWebView = [[mainWKWebView alloc] init];
     //
     //    [_mainWebView createWKWebView];
+    
+    
+    
+    
+    //这一下就万法皆通了么！！！！！！！！！！！
+    //一直在疑惑怎么证明代理是加到ZRNMainView上的
+    //这下就好了!!!
+    _MainView.mainMessageTableView.delegate = self;
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if ( _MainView.analyJSONMutArray.count == 0 || _MainView.mainMessageTableView.isHidden == NO ){
+        return;
+    }
+    
+    CGFloat offsetY = scrollView.contentOffset.y;
+    
+    // 当最后一个cell完全显示在眼前时，contentOffset的y值
+    
+    
+    //不知道这样还能用不
+    //与那个博客上的赋值方法不相符合！！！！
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //当最后一个CELL完全显示在眼前时
+    CGFloat judgeOffsetY = scrollView.contentSize.height + scrollView.contentInset.bottom - scrollView.contentSize.height - _MainView.mainMessageTableView.tableFooterView.frame.size.height;
+    
+    if ( offsetY >= judgeOffsetY ){
+        //最后一个CELL完全进入视野
+        //显示footer
+        _MainView.mainMessageTableView.tableFooterView.hidden = NO;
+        
+        //加载更多数据
+        //就把那个 正在加载中 弄出来
+        
+        //这是那个异步请求数据的方法 不是那个UIVIew视图
+        
+        //这里需要修改一下！！！！！！
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //判断一下 最后一个CELL 网址找好了！！！
+//        还有这里修改一下
+        [_MainView loadMoreView];
+    }
     
     
 }

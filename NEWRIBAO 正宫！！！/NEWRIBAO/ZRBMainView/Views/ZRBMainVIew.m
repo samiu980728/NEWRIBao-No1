@@ -7,11 +7,45 @@
 //
 
 #import "ZRBMainVIew.h"
+#import "ZRBLoadMoreView.h"
+/************************自定义UIRefreshControl**************************/
+
+//@interface WSRefreshControl : UIRefreshControl
+//
+//@end
+//
+//@implementation WSRefreshControl
+//
+//-(void)beginRefreshing
+//{
+//    [super beginRefreshing];
+//    [self sendActionsForControlEvents:UIControlEventValueChanged];
+//}
+//
+//-(void)endRefreshing
+//{
+//    [super endRefreshing];
+//    [self sendActionsForControlEvents:UIControlEventValueChanged];
+//}
+//@end
+
+/********************************************************************/
 
 @implementation ZRBMainVIew
 
 - (void)initMainTableView
 {
+    
+    //代理网络传值
+    _cellJSONModel = [[ZRBCellModel alloc] init];
+    
+    //得在调用代理前创建
+    _titleMutArray = [[NSMutableArray alloc] init];
+    
+    _imageMutArray = [[NSMutableArray alloc] init];
+    //代理得提前用
+    _cellJSONModel.delegateCell = self;
+    
     //在这里解析数据
     // _mainMessageTableView = [[UITableView alloc] init];
     //_analyJSONMutArray = [[NSMutableArray alloc] init];
@@ -23,9 +57,7 @@
     //
     //    NSLog(@"mainView 中的 _analyJSONMutArray = %@",_analyJSONMutArray);
     
-    _titleMutArray = [[NSMutableArray alloc] init];
     
-    _imageMutArray = [[NSMutableArray alloc] init];
     
     _newsLabel = [[UILabel alloc] init];
     _newsImageView = [[UIImageView alloc] init];
@@ -72,14 +104,50 @@
     
     NSLog(@"----------------------");
     
+    //ZRBCellModel 方法的调用
+    [_cellJSONModel giveCellJSONModel];
+    
+    
     //在发送通知后
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tongzhi:) name:@"tongzhi" object:nil];
     
     
-    //    _analyJSONModel = [[AnalysisJSONModel alloc] init];
-    //
-    //    [_analyJSONModel AnalysisJSON];
-    //NSLog(@"_analyJSONMutArray ----- --- - -- - --- - --- - = %@",_analyJSONMutArray);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _mainMessageTableView = [[UITableView alloc] init];
+        [_mainMessageTableView registerClass:[ZRBNewsTableViewCell class] forCellReuseIdentifier:@"messageCell"];
+        
+        //注册头部视图
+        [_mainMessageTableView registerClass:[ZRBDetailsTableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"detailHeaderView"];
+        
+//        [_mainMessageTableView f]
+        
+        _mainMessageTableView.delegate = self;
+        _mainMessageTableView.dataSource = self;
+        
+        //_cellJSONModel.delegateCell = self;
+        
+        [self setUpDownRefresh];
+        
+        [self addSubview:_mainMessageTableView];
+        
+        [_mainMessageTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self);
+            make.top.equalTo(self).offset(50);
+            make.width.mas_equalTo([UIScreen mainScreen].bounds.size.width);
+            make.height.mas_equalTo([UIScreen mainScreen].bounds.size.height-30);
+            
+            
+            _cellTagInteger = 0;
+            
+            //            make.edges.mas_equalTo(self);
+        }];
+        [_mainMessageTableView reloadData];
+        
+        
+        
+    });
+    
 }
 
 //移除通知
@@ -91,6 +159,27 @@
 
 - (void)tongzhi:(NSNotification *)noti
 {
+    //代理传值
+    //ZRBMainVIew * mainVeiw = [[ZRBMainVIew alloc] init];
+    
+    //代理传值完毕 接下来就是 写ZRBCellModel代理在 该视图下的方法 并进行传值
+    //在底下写 然后NSLog一下！！！！！！！！！
+    
+    
+    
+    
+    
+    
+    
+    
+//    _cellJSONModel = [[ZRBCellModel alloc] init];
+    
+    //self.delegate  = _cellJSONModel.delegateCell;
+    //mainVeiw.delegate = self;
+    //_cellJSONModel.delegate = self.delegate;
+//    self.delegate = self;
+    //self.JSONModelDelegate = self;
+    
     //NSLog(@"==========noti.userInfo = %@",noti.userInfo[@"one"]);
     
     //应该字典赋值
@@ -98,7 +187,10 @@
     //_analyJSONDict = [NSDictionary dictionaryWithDictionary:noti.userInfo[@"one"]];
     //NSLog(@"_analyJSONDict ==== === %@",_analyJSONDict);
     
+    //下面为赋值
+    if ( noti ){
     _analyJSONMutArray = [NSMutableArray arrayWithArray:noti.userInfo[@"one"]];
+    }
     
     for ( int i = 0; i < _analyJSONMutArray.count; i++ ) {
         ZRBMainJSONModel * titleModel = [[ZRBMainJSONModel alloc] init];
@@ -133,69 +225,237 @@
             [_imageMutArray addObject:image];
         }
         
-        
-        
     }
-    //NSLog(@"_titleMutArray =====  %@----",_titleMutArray);
-    
-    //    MainJSONModel * titleModel = [[MainJSONModel alloc] init];
-    
-    
-    //NSLog(@"_analyJSONMutArray[0] ----- --- - -- - --- - --- - = %@",_analyJSONMutArray[0]);
-    //NSLog(@"_analyJSONMutArray.count === =   %li",_analyJSONMutArray.count);
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        _mainMessageTableView = [[UITableView alloc] init];
-        [_mainMessageTableView registerClass:[ZRBNewsTableViewCell class] forCellReuseIdentifier:@"messageCell"];
-        
-        _mainMessageTableView.delegate = self;
-        _mainMessageTableView.dataSource = self;
-        
-        [self addSubview:_mainMessageTableView];
-        
-        [_mainMessageTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            
-            make.left.equalTo(self);
-            make.top.equalTo(self).offset(50);
-            make.width.mas_equalTo([UIScreen mainScreen].bounds.size.width);
-            make.height.mas_equalTo([UIScreen mainScreen].bounds.size.height-30);
-            //            make.edges.mas_equalTo(self);
-        }];
+        [_mainMessageTableView reloadData];
+        _mainMessageTableView.tableFooterView.hidden = YES;
     });
-    //    _mainMessageTableView = [[UITableView alloc] init];
-    //
-    //    _mainMessageTableView.delegate = self;
-    //    _mainMessageTableView.dataSource = self;
     
+    
+    //以下是 创建view的
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        _mainMessageTableView = [[UITableView alloc] init];
+//        [_mainMessageTableView registerClass:[ZRBNewsTableViewCell class] forCellReuseIdentifier:@"messageCell"];
+//
+//        //注册头部视图
+//        [_mainMessageTableView registerClass:[ZRBDetailsTableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"detailHeaderView"];
+//
+//
+//        _mainMessageTableView.delegate = self;
+//        _mainMessageTableView.dataSource = self;
+//
+//        //_cellJSONModel.delegateCell = self;
+//
+//        [self addSubview:_mainMessageTableView];
+//
+//        [_mainMessageTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//            make.left.equalTo(self);
+//            make.top.equalTo(self).offset(50);
+//            make.width.mas_equalTo([UIScreen mainScreen].bounds.size.width);
+//            make.height.mas_equalTo([UIScreen mainScreen].bounds.size.height-30);
+//
+//
+//            _cellTagInteger = 0;
+//
+//            //            make.edges.mas_equalTo(self);
+//        }];
+//        [_mainMessageTableView reloadData];
+//
+//    });
+//
+    //以上是创建view的
     
 }
 
+//集成上拉刷新的方法
+
+//这个 好像没有 用到？？？？
+
+- (void)setUpDownRefresh
+{
+    ZRBLoadMoreView * loadMoreView = [[ZRBLoadMoreView alloc] init];
+    [loadMoreView footer];
+    loadMoreView.frame = CGRectMake(0, 0, 414, 44);
+    
+    loadMoreView.hidden = NO;
+    _mainMessageTableView.tableFooterView = loadMoreView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 100;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    ZRBLoadMoreView * loadMoreView = [[ZRBLoadMoreView alloc] init];
+    [loadMoreView footer];
+    loadMoreView.frame = CGRectMake(0, 0, 414, 44);
+
+    loadMoreView.hidden = NO;
+    return loadMoreView;
+}
+
+- (void)giveCellJSONModelToMainView:(NSMutableArray *)imaMutArray andTitle:(NSMutableArray *)titMutArray
+{
+//    _imageMutArray = [NSMutableArray ar
+    [_imageMutArray setArray:imaMutArray];
+    //[_imageMutArray addObject:imaMutArray];
+    //[_imageMutArray arrayByAddingObjectsFromArray:imaMutArray];
+    [_titleMutArray setArray:titMutArray];
+    
+    NSLog(@"****************    imaMutArray = == = = =%@",imaMutArray);
+    NSLog(@"****************代理协议里的  _imageMutArray = == = = = = == = %@",_imageMutArray);
+}
+
+//- (void)refresh
+//{
+//
+//    if (self.refreshControl.isRefreshing && self.loadMoreView.isAnimating ==NO){
+//        [self.modelArray removeAllObjects];//清除旧数据，每次都加载最新的数据
+//        self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"加载中..."];
+//        [self addData];
+//        self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"下拉刷新"];
+//        [self.tableView reloadData];
+//        [self.refreshControl endRefreshing];
+//        self.loadMoreView.tipsLabel.hidden = YES;
+//
+//    }
+//}
+//
+//- (void)loadMore
+//{
+//
+//}
+//
+////加载数据
+//- (void)addData
+//{
+//
+//}
+
+//头视图相关
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+//    _headerFooterView = [[ZRBDetailsTableViewHeaderFooterView alloc] init];
+    _headerFooterView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"detailHeaderView"];
+    if ( _headerFooterView == nil ){
+        _headerFooterView = [[ZRBDetailsTableViewHeaderFooterView alloc] initWithReuseIdentifier:@"detailHeaderView"];
+        
+        
+    }
+    _headerFooterView.dateLabel.text = @"每天都是星期七";
+    NSLog(@"section == = == = = = %li",section);
+    return _headerFooterView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+//    if ( _analyJSONMutArray.count <= 1 ){
+//        return 1;
+//    }
+    
+    NSLog(@"_analyJSONMutArray.count == == = = =%li = = == ",_analyJSONMutArray.count);
+    return 100;
+}
+
+
+//- (UITableViewCell *)
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    static NSString * identifer = @"messageCell";
+    NSString * CellIdentitier = [NSString stringWithFormat:@"cell%ld%ld",indexPath.section,indexPath.row];
+    
     //在mainView的nagviationBar上加按钮！！！
     ZRBNewsTableViewCell * cell = nil;
     
-    cell = [_mainMessageTableView dequeueReusableCellWithIdentifier:@"messageCell" forIndexPath:indexPath];
+    UITableViewCell * cell2 = nil;
+    cell2 = [tableView dequeueReusableCellWithIdentifier:@"labelCell"];
+    //cell = [tableView dequeueReusableCellWithIdentifier:@"messageCell"];
+    
+    cell = [tableView dequeueReusableCellWithIdentifier:identifer];
+    
+    
+    //然后该加入那个刷新符号啦！！！！！
+    
+    
+    
+    //cell = [tableView dequeueReusableCellWithIdentifier:CellIdentitier forIndexPath:indexPath];
+    
+    //if ( cell == nil ){
+        //cell = [[ZRBNewsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentitier];
+    
+//    if ( indexPath.section == 0 ){
+//    cell.tag = indexPath.row;
+//        _cellTagInteger++;
+//    }else{
+//        cell.tag = indexPath.row + _cellTagInteger;
+//    }
+//    NSLog(@"cellTagInteger == = = %li",_cellTagInteger);
+//    NSLog(@"cell.tag == = = = = =%li",cell.tag);
+    
     
     //NSLog(@"_titleMutArray.count = %li, _imageMutArray.count = %li ",_titleMutArray.count,_imageMutArray.count);
     
     //NSLog(@"CELlllllllll 里的 _titleMutArray == %@",_titleMutArray);
+    //if ( cell == nil ){
+        
+        //cell = [[ZRBNewsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"messageCell"];
+    
+//    if ( indexPath.section > 1 ){
+//        [_titleMutArray removeAllObjects];
+//        [_imageMutArray removeAllObjects];
+//    }
+    
+    if ( indexPath.section <= 0 ){
+    if ( indexPath.row < _analyJSONMutArray.count && indexPath.section == 0 ){
+    
     if ( [_titleMutArray isKindOfClass:[NSArray class]] && _titleMutArray.count > 0 ){
+        if ( cell.tag <= _titleMutArray.count ){
         cell.newsLabel.text = [NSString stringWithFormat:@"%@",[_titleMutArray objectAtIndex:indexPath.row]];
+            NSLog(@"111");
+        }
         // NSLog(@"[_titleMutArray objectAtIndex:indexPath.row] == %@",[_titleMutArray objectAtIndex:indexPath.row]);
+        //[_titleMutArray removeAllObjects];
         
     }
     
     if ( [_imageMutArray isKindOfClass:[NSArray class]] && _imageMutArray.count > 0 ){
+        if ( cell.tag <= _imageMutArray.count ){
         cell.newsImageView.image = _imageMutArray[indexPath.row];
+        }
+        //[_imageMutArray removeAllObjects];
     }
+        
+        //NSLog(@"indexPath.section == = = == = == = =%li==-=-=",indexPath.section);
+        return cell;
+    }
+    
+    }else{
+        if ( cell2 == nil ){
+            cell2 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"labelCell"];
+        }
+        return cell2;
+    }
+        
+  //  }
     
     //[self addSubview:cell];
     //开始给每个单元格赋值
+   // }
     
     
+    //目前的一个重用解决方法  不用自定义cell 用系统的cell 解决重用问题  看睡前的最后一篇文章
+    //最新添加到safari书签中的那个！
     
-    return cell;
+    
+    return cell2;
+    
+    //[tableView reloadData];
+//    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -245,14 +505,6 @@
     return 60;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if ( _analyJSONMutArray.count <= 1 ){
-        return 1;
-    }
-    return 30;
-}
-
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -264,7 +516,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 3;
 }
 
 

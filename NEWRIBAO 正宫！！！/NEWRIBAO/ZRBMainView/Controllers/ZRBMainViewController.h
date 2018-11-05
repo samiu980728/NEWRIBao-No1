@@ -15,7 +15,7 @@
 #import "SecondaryMessageViewController.h"
 
 @interface ZRBMainViewController : UIViewController
-<ZRBPushToWebViewDelegate>
+<ZRBPushToWebViewDelegate,UITableViewDelegate>
 
 @property (nonatomic, strong) ZRBMainVIew * MainView;
 

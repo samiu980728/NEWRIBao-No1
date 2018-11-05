@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		09F23F6C62672E9527CFB4B8 /* libPods-NEWRIBAO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C75D44218C3E0831B38869C /* libPods-NEWRIBAO.a */; };
+		6718607B218F336700F4EBCE /* ZRBLoadMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6718607A218F336700F4EBCE /* ZRBLoadMoreView.m */; };
 		673F78BB218745A60085F745 /* ZRBPushMainNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 673F78BA218745A60085F745 /* ZRBPushMainNavigationViewController.m */; };
 		673FBE662185E387000CA6BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 673FBE652185E387000CA6BD /* AppDelegate.m */; };
 		673FBE692185E387000CA6BD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 673FBE682185E387000CA6BD /* ViewController.m */; };
@@ -29,8 +30,10 @@
 		673FBEF921860C0B000CA6BD /* ZRBMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 673FBEF821860C0B000CA6BD /* ZRBMainViewController.m */; };
 		674418172186B2B80075BCD3 /* 122.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 674418162186B2B80075BCD3 /* 122.jpg */; };
 		674418192186B2C60075BCD3 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 674418182186B2C60075BCD3 /* 1.png */; };
+		6755FE8A218D09FB0033411D /* ZRBCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6755FE89218D09FB0033411D /* ZRBCellModel.m */; };
 		67627A9521886073007886CD /* ZRBRequestJSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 67627A9421886073007886CD /* ZRBRequestJSONModel.m */; };
 		67627A9921888B20007886CD /* ZRBMessageDelegateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 67627A9821888B20007886CD /* ZRBMessageDelegateManager.m */; };
+		6777035721898EFD00C91537 /* ZRBDetailsTableViewHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6777035621898EFD00C91537 /* ZRBDetailsTableViewHeaderFooterView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +55,8 @@
 
 /* Begin PBXFileReference section */
 		0DCD996643A0C5AE81961D7E /* Pods-NEWRIBAO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NEWRIBAO.debug.xcconfig"; path = "Target Support Files/Pods-NEWRIBAO/Pods-NEWRIBAO.debug.xcconfig"; sourceTree = "<group>"; };
+		67186079218F336700F4EBCE /* ZRBLoadMoreView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZRBLoadMoreView.h; sourceTree = "<group>"; };
+		6718607A218F336700F4EBCE /* ZRBLoadMoreView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBLoadMoreView.m; sourceTree = "<group>"; };
 		673F78B9218745A60085F745 /* ZRBPushMainNavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZRBPushMainNavigationViewController.h; sourceTree = "<group>"; };
 		673F78BA218745A60085F745 /* ZRBPushMainNavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBPushMainNavigationViewController.m; sourceTree = "<group>"; };
 		673FBE612185E387000CA6BD /* NEWRIBAO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NEWRIBAO.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,10 +97,14 @@
 		673FBEF821860C0B000CA6BD /* ZRBMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBMainViewController.m; sourceTree = "<group>"; };
 		674418162186B2B80075BCD3 /* 122.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 122.jpg; path = ../../../122.jpg; sourceTree = "<group>"; };
 		674418182186B2C60075BCD3 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1.png; path = "../../../日报图片/1.png"; sourceTree = "<group>"; };
+		6755FE88218D09FB0033411D /* ZRBCellModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZRBCellModel.h; sourceTree = "<group>"; };
+		6755FE89218D09FB0033411D /* ZRBCellModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBCellModel.m; sourceTree = "<group>"; };
 		67627A9321886073007886CD /* ZRBRequestJSONModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZRBRequestJSONModel.h; sourceTree = "<group>"; };
 		67627A9421886073007886CD /* ZRBRequestJSONModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBRequestJSONModel.m; sourceTree = "<group>"; };
 		67627A9721888B20007886CD /* ZRBMessageDelegateManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZRBMessageDelegateManager.h; sourceTree = "<group>"; };
 		67627A9821888B20007886CD /* ZRBMessageDelegateManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBMessageDelegateManager.m; sourceTree = "<group>"; };
+		6777035521898EFD00C91537 /* ZRBDetailsTableViewHeaderFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZRBDetailsTableViewHeaderFooterView.h; sourceTree = "<group>"; };
+		6777035621898EFD00C91537 /* ZRBDetailsTableViewHeaderFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBDetailsTableViewHeaderFooterView.m; sourceTree = "<group>"; };
 		7AE6F0FB462B09A7B3D74B4E /* Pods-NEWRIBAO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NEWRIBAO.release.xcconfig"; path = "Target Support Files/Pods-NEWRIBAO/Pods-NEWRIBAO.release.xcconfig"; sourceTree = "<group>"; };
 		7C75D44218C3E0831B38869C /* libPods-NEWRIBAO.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NEWRIBAO.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -126,6 +135,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		67186078218F333600F4EBCE /* ZRBLoadMoreUIView */ = {
+			isa = PBXGroup;
+			children = (
+				67186079218F336700F4EBCE /* ZRBLoadMoreView.h */,
+				6718607A218F336700F4EBCE /* ZRBLoadMoreView.m */,
+			);
+			path = ZRBLoadMoreUIView;
+			sourceTree = "<group>";
+		};
 		673F78B82187452D0085F745 /* ZRBNavigationViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +217,7 @@
 		673FBE962185E529000CA6BD /* ZRBMainView */ = {
 			isa = PBXGroup;
 			children = (
+				6755FE87218D09360033411D /* UITableViewManage */,
 				673FBECF2185F532000CA6BD /* Model */,
 				673FBE982185E58F000CA6BD /* Views */,
 				673FBE972185E582000CA6BD /* Controllers */,
@@ -218,6 +237,9 @@
 		673FBE982185E58F000CA6BD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				67186078218F333600F4EBCE /* ZRBLoadMoreUIView */,
+				677703582189E53E00C91537 /* ZRBUICollectionReusableView */,
+				6777035421898EB900C91537 /* ZRBDetailsTableViewHeaderFooterView */,
 				673F78B82187452D0085F745 /* ZRBNavigationViewController */,
 				673FBEE32185F759000CA6BD /* ZRBMainWKWebView */,
 				673FBEDF2185F720000CA6BD /* ZRBNewsTableViewCell */,
@@ -353,6 +375,15 @@
 			path = Image;
 			sourceTree = "<group>";
 		};
+		6755FE87218D09360033411D /* UITableViewManage */ = {
+			isa = PBXGroup;
+			children = (
+				6755FE88218D09FB0033411D /* ZRBCellModel.h */,
+				6755FE89218D09FB0033411D /* ZRBCellModel.m */,
+			);
+			path = UITableViewManage;
+			sourceTree = "<group>";
+		};
 		67627A9621888AC6007886CD /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,6 +391,22 @@
 				67627A9821888B20007886CD /* ZRBMessageDelegateManager.m */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		6777035421898EB900C91537 /* ZRBDetailsTableViewHeaderFooterView */ = {
+			isa = PBXGroup;
+			children = (
+				6777035521898EFD00C91537 /* ZRBDetailsTableViewHeaderFooterView.h */,
+				6777035621898EFD00C91537 /* ZRBDetailsTableViewHeaderFooterView.m */,
+			);
+			path = ZRBDetailsTableViewHeaderFooterView;
+			sourceTree = "<group>";
+		};
+		677703582189E53E00C91537 /* ZRBUICollectionReusableView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ZRBUICollectionReusableView;
 			sourceTree = "<group>";
 		};
 		B120F3DC320C5F1F208F2B46 /* Frameworks */ = {
@@ -539,11 +586,13 @@
 				673FBE692185E387000CA6BD /* ViewController.m in Sources */,
 				673FBEF921860C0B000CA6BD /* ZRBMainViewController.m in Sources */,
 				673FBE742185E387000CA6BD /* main.m in Sources */,
+				6755FE8A218D09FB0033411D /* ZRBCellModel.m in Sources */,
 				673FBEEF2185FAAB000CA6BD /* SecondaryMessageViewController.m in Sources */,
 				673FBED22185F568000CA6BD /* ZRBMessageTableViewCell.m in Sources */,
 				673FBEDE2185F6B6000CA6BD /* ZRBMainJSONModel.m in Sources */,
 				673FBED52185F5C6000CA6BD /* ZRBMessageVView.m in Sources */,
 				673FBEE22185F74B000CA6BD /* ZRBNewsTableViewCell.m in Sources */,
+				6718607B218F336700F4EBCE /* ZRBLoadMoreView.m in Sources */,
 				673F78BB218745A60085F745 /* ZRBPushMainNavigationViewController.m in Sources */,
 				673FBE662185E387000CA6BD /* AppDelegate.m in Sources */,
 				673FBEE62185F777000CA6BD /* ZRBMainWKWebView.m in Sources */,
@@ -551,6 +600,7 @@
 				673FBEDB2185F661000CA6BD /* ZRBAnalysisJSONModel.m in Sources */,
 				673FBEE92185F7C5000CA6BD /* ZRBMainVIew.m in Sources */,
 				67627A9521886073007886CD /* ZRBRequestJSONModel.m in Sources */,
+				6777035721898EFD00C91537 /* ZRBDetailsTableViewHeaderFooterView.m in Sources */,
 				67627A9921888B20007886CD /* ZRBMessageDelegateManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NEWRIBAO/ZRBNewsMessageView/Controllers/SecondaryMessageViewController.m"
-            timestampString = "562604473.7075779"
+            timestampString = "562660226.6953371"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "32"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NEWRIBAO/ZRBMainView/Views/ZRBNavigationViewController/ZRBPushMainNavigationViewController.m"
-            timestampString = "562585276.93804"
+            timestampString = "562682639.217417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "66"
@@ -42,12 +42,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NEWRIBAO/ZRBMainView/Views/ZRBNavigationViewController/ZRBPushMainNavigationViewController.m"
-            timestampString = "562585276.93808"
+            timestampString = "562682639.217467"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "45"
             endingLineNumber = "45"
             landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NEWRIBAO/ZRBMainView/Controllers/ZRBRefreshTableViewController.m"
+            timestampString = "562870071.073261"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NEWRIBAO/ZRBMainView/Views/ZRBMainVIew.m"
+            timestampString = "563084843.751911"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
+            landmarkName = "-setUpDownRefresh"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
