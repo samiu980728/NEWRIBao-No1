@@ -1,0 +1,54 @@
+//
+//  ZRBCoordinateMananger.h
+//  NEWRIBAO
+//
+//  Created by 萨缪 on 2018/11/6.
+//  Copyright © 2018年 萨缪. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "ZRBMainJSONModel.h"
+
+typedef void(^ZRBGetJSONModelHandle)(NSMutableArray * JSONModelMutArray);
+
+//请求失败回调block
+typedef void(^ErrorHandle)(NSError *error);
+
+
+@interface ZRBCoordinateMananger : NSObject
+
+
+@property (nonatomic, strong) NSString * testUrlStr;
+
+@property (nonatomic, strong) NSURL * testUrl;
+
+@property (nonatomic, strong) NSURLRequest * testRequest;
+
+@property (nonatomic, strong) NSURLSession * testSession;
+
+@property (nonatomic, strong) NSURLSessionDataTask * testDataTask;
+
+@property (nonatomic, strong) NSDictionary * obj;
+
+@property (nonatomic, strong) NSMutableArray * JSONModelMut;
+
+@property (nonatomic, strong) NSString * nowDateStr;
+
+@property (nonatomic, strong) TotalJSONModel * totalJSONModel;
+
+@property (nonatomic, strong) ZRBMainJSONModel * mainJSONModel;
+
+@property (nonatomic, strong) StoriesJSONModel * storiesJSONModel;
+
+@property (nonatomic, strong) NSMutableArray * testUrlMutArray;
+
+
+
++ (instancetype)sharedManager;
+
+//@property (nonatomic, strong) ZRBCoordinateMananger * manager;
+
+//导入网络请求
+- (void)fetchDataWithMainJSONModelsucceed:(ZRBGetJSONModelHandle)succeedBlock error:(ErrorHandle)errorBlock;
+
+@end

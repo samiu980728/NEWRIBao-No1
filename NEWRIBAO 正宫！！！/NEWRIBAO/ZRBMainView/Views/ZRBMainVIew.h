@@ -16,7 +16,7 @@
 #import "ZRBDetailsTableViewHeaderFooterView.h"
 #import "ZRBLoadMoreView.h"
 #import "ZRBCellModel.h"
-
+#import "ZRBCoordinateMananger.h"
 
 @protocol ZRBPushToWebViewDelegate <NSObject>
 
@@ -86,4 +86,9 @@
 //集成上拉刷新的方法
 - (void)setUpDownRefresh;
 
+//新方法调用Manager类里面的块去回调网络请求
+//- (void)fenethMessageFromManagerBlock;
+//@property (nonatomic, strong)
+
 @end
+

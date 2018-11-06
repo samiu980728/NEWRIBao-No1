@@ -8,7 +8,7 @@
 
 #import "ZRBMainViewController.h"
 
-@interface ZRBMainViewController ()
+@interface ZRBMainViewController ()<UIScrollViewDelegate>
 
 @end
 
@@ -22,6 +22,21 @@
     
     self.title = @"今日新闻";
     
+    
+    //以下为网络请求
+//    _mainImageMutArray = [[NSMutableArray alloc] init];
+//    _mainTitleMutArray = [[NSMutableArray alloc] init];
+    _mainAnalyisMutArray = [[NSMutableArray alloc] init];
+//    _MainView.titleMutArray = [[NSMutableArray alloc] init];
+//    _MainView.imageMutArray = [[NSMutableArray alloc] init];
+    
+    _mainCellJSONModel = [[ZRBCellModel alloc] init];
+    [_mainCellJSONModel giveCellJSONModel];
+    _mainCellJSONModel.delegateCell = self;
+    
+    //以上为网络请求
+    
+    
     //开启滑动返回功能代码
     if ( [self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)] ){
         self.navigationController.interactivePopGestureRecognizer.delegate = nil;
@@ -29,6 +44,8 @@
     
     
     _messageView = [[ZRBMessageVView alloc] init];
+    
+    
     
     [_messageView initTableView];
     
@@ -47,7 +64,13 @@
     
     [_MainView.leftNavigationButton addTarget:self action:@selector(pressLeftBarButton:) forControlEvents:UIControlEventTouchUpInside];
     
+    
     _MainView.delegate = self;
+    
+    
+//    //滚动视图代理方法
+//    UIScrollView * scrollowView = [[UIScrollView alloc] init];
+//    scrollowView.delegate = self;
     
     [self.view addSubview:_MainView];
     
@@ -55,71 +78,197 @@
         make.edges.equalTo(self.view);
     }];
     
-    //    _mainWebView = [[mainWKWebView alloc] init];
-    //
-    //    [_mainWebView createWKWebView];
-    
-    
-    
-    
     //这一下就万法皆通了么！！！！！！！！！！！
     //一直在疑惑怎么证明代理是加到ZRNMainView上的
     //这下就好了!!!
     _MainView.mainMessageTableView.delegate = self;
+    [self fenethMessageFromManagerBlock];
     
+}
+
+
+//manager类网络请求
+- (void)fenethMessageFromManagerBlock
+{
+    _MainView.titleMutArray = [[NSMutableArray alloc] init];
+    _MainView.imageMutArray = [[NSMutableArray alloc] init];
+    _mainImageMutArray = [[NSMutableArray alloc] init];
+    _mainTitleMutArray = [[NSMutableArray alloc] init];
+    _titleMutArray = [[NSMutableArray alloc] init];
+    _imageMutArray = [[NSMutableArray alloc] init];
+    
+    [[ZRBCoordinateMananger sharedManager] fetchDataWithMainJSONModelsucceed:^(NSMutableArray *JSONModelMutArray) {
+        if ( [JSONModelMutArray isKindOfClass:[NSArray class]] && JSONModelMutArray.count > 0 ){
+            _analyJSONMutArray = [NSMutableArray arrayWithArray:JSONModelMutArray];
+        }
+        
+        NSLog(@"12321312131312 JSONModelMutArray == = =%@ ",JSONModelMutArray);
+        
+        for ( int i = 0; i < _analyJSONMutArray.count; i++ ) {
+            ZRBMainJSONModel * titleModel = [[ZRBMainJSONModel alloc] init];
+            //StoriesJSONModel * storiesModel = [[StoriesJSONModel alloc] init];
+            
+            titleModel = _analyJSONMutArray[i];
+            //NSLog(@"-------titleModel---- == = %@--",_analyJSONMutArray[i]);
+            
+            //为什么加不上去？？？？？
+            //NSLog(@"titleModel.title === %@",titleModel.title);
+            [_titleMutArray addObject:titleModel.title];
+            
+            NSLog(@"1232132132132132132132131");
+            
+            //打印下来是【Images】 但是API分析里是image
+            //现在问题是 他把StoriesJSONModel 和 MainJSONModel  里的image弄混了
+            //一个是Images 一个是image
+            
+            
+            //NSString * JSONImageStr = [NSString stringWithFormat:@"%@",titleModel.images];
+            
+            NSURL *JSONUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@",titleModel.images[0]]];
+            
+            NSLog(@"titleModel.image === %@",titleModel.images);
+
+            NSLog(@"JSONImageStr == %@",JSONUrl);
+            
+            NSData * imageData = [NSData dataWithContentsOfURL:JSONUrl];
+            UIImage * image = [UIImage imageWithData:imageData];
+            
+            if ( image ){
+                [_imageMutArray addObject:image];
+                
+                
+            }
+            
+        }
+        
+//        _MainView.titleMutArray = [[NSMutableArray alloc] init];
+//        _MainView.imageMutArray = [[NSMutableArray alloc] init];
+        
+        [_mainImageMutArray setArray:_imageMutArray];
+        [_mainTitleMutArray setArray:_titleMutArray];
+        
+        [_MainView.imageMutArray setArray:_mainImageMutArray];
+        [_MainView.titleMutArray setArray:_mainTitleMutArray];
+        
+        
+        NSLog(@"COntroller中的 _imageMutArray = == = = =%@",_imageMutArray);
+        
+        NSLog(@"Controlwqweqwe _MainView.imageMutArray = = = =%@",_MainView.imageMutArray);
+        //创建一个通知
+        NSNotification * reloadDataNotification = [NSNotification notificationWithName:@"reloadDataTongZhi" object:nil userInfo:nil];
+        
+        //创建并发送通知 然后在View层执行通知 通知的内容是更新视图
+        //问题是
+        [[NSNotificationCenter defaultCenter] postNotification:reloadDataNotification];
+        
+        
+    } error:^(NSError *error) {
+        NSLog(@"网络请求出错-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+    }];
+    
+    
+    
+    //以上为刚才修改  ： 注释掉
+    
+    //    [ZRBCoordinateMananger sharedManager] fetchDataWithMainJSONModel:^(NSMutableArray *obj) {
+    //        <#code#>
+    //    };
+}
+
+
+- (void)giveCellJSONModelToMainView:(NSMutableArray *)imaMutArray andTitle:(NSMutableArray *)titMutArray
+{
+//    _mainImageMutArray = [[NSMutableArray alloc] init];
+//    _mainTitleMutArray = [[NSMutableArray alloc] init];
+//    _MainView.titleMutArray = [[NSMutableArray alloc] init];
+//    _MainView.imageMutArray = [[NSMutableArray alloc] init];
+//
+//    [_mainImageMutArray setArray:imaMutArray];
+//    [_mainTitleMutArray setArray:titMutArray];
+//
+//    [_MainView.imageMutArray setArray:_mainImageMutArray];
+//    [_MainView.titleMutArray setArray:_mainTitleMutArray];
+//
+//    //创建一个通知
+//    NSNotification * reloadDataNotification = [NSNotification notificationWithName:@"reloadDataTongZhi" object:nil userInfo:nil];
+//
+//    //创建并发送通知 然后在View层执行通知 通知的内容是更新视图
+//    //问题是
+//    [[NSNotificationCenter defaultCenter] postNotification:reloadDataNotification];
+
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [_MainView.mainMessageTableView reloadData];
+//    });
+
+    NSLog(@"****************    imaMutArray = == = = =%@",imaMutArray);
+    NSLog(@"****************Controlller代理协议里的  _imageMutArray = == = = = = == = %@",_mainImageMutArray);
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if ( _MainView.analyJSONMutArray.count == 0 || _MainView.mainMessageTableView.isHidden == NO ){
-        return;
+    
+    if (scrollView.bounds.size.height +  scrollView.contentOffset.y >scrollView.contentSize.height) {
+        
+        [UIView animateWithDuration:1.0 animations:^{
+            
+            scrollView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
+            
+        } completion:^(BOOL finished) {
+            
+            NSLog(@"发起上拉加载");
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                [UIView animateWithDuration:1.0 animations:^{
+                    
+                    scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+                    
+                }];
+            });
+        }];
+        
+        
     }
-    
-    CGFloat offsetY = scrollView.contentOffset.y;
-    
-    // 当最后一个cell完全显示在眼前时，contentOffset的y值
-    
-    
-    //不知道这样还能用不
-    //与那个博客上的赋值方法不相符合！！！！
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //当最后一个CELL完全显示在眼前时
-    CGFloat judgeOffsetY = scrollView.contentSize.height + scrollView.contentInset.bottom - scrollView.contentSize.height - _MainView.mainMessageTableView.tableFooterView.frame.size.height;
-    
-    if ( offsetY >= judgeOffsetY ){
-        //最后一个CELL完全进入视野
-        //显示footer
-        _MainView.mainMessageTableView.tableFooterView.hidden = NO;
-        
-        //加载更多数据
-        //就把那个 正在加载中 弄出来
-        
-        //这是那个异步请求数据的方法 不是那个UIVIew视图
-        
-        //这里需要修改一下！！！！！！
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        //判断一下 最后一个CELL 网址找好了！！！
-//        还有这里修改一下
-        [_MainView loadMoreView];
-    }
+//    if ( _MainView.analyJSONMutArray.count == 0 || _MainView.mainMessageTableView.isHidden == NO ){
+//        return;
+//    }
+//
+//    CGFloat offsetY = scrollView.contentOffset.y;
+//
+//    // 当最后一个cell完全显示在眼前时，contentOffset的y值
+//
+//
+//    //不知道这样还能用不
+//    //与那个博客上的赋值方法不相符合！！！！
+//
+//    //当最后一个CELL完全显示在眼前时
+//    CGFloat judgeOffsetY = scrollView.contentSize.height + scrollView.contentInset.bottom - scrollView.contentSize.height - _MainView.mainMessageTableView.tableFooterView.frame.size.height;
+//
+//    if ( offsetY >= judgeOffsetY ){
+//        //最后一个CELL完全进入视野
+//        //显示footer
+//        _MainView.mainMessageTableView.tableFooterView.hidden = NO;
+//
+//        //加载更多数据
+//        //就把那个 正在加载中 弄出来
+//
+//        //这是那个异步请求数据的方法 不是那个UIVIew视图
+//
+//        //这里需要修改一下！！！！！！
+//
+//
+//
+//        //现在问题是 问崔总 下拉刷新怎么搞？？思路是什么
+//        //还有他说的那个 写一个方法 传值 怎么搞？？？
+//
+//
+//
+//
+//
+//        //判断一下 最后一个CELL 网址找好了！！！
+////        还有这里修改一下
+//        [_MainView loadMoreView];
+//    }
     
     
 }
