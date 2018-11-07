@@ -27,6 +27,11 @@
 @interface ZRBMainVIew : UIView
 
 <UITableViewDelegate, UITableViewDataSource,ZRBGiveCellJSONMOdelToMainViewDelegate>
+
+//测试 加载更多效果
+@property (nonatomic, copy) NSString * testStr;
+
+
 //mainTableView
 @property (nonatomic, strong) UITableView * mainMessageTableView;
 

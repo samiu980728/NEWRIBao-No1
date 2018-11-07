@@ -49,4 +49,8 @@
 
 @property (nonatomic, strong) NSMutableArray * analyJSONMutArray;
 
+@property (nonatomic, assign) BOOL refresh;
+
+@property (nonatomic, assign) NSInteger refreshNumInteger;
+
 @end

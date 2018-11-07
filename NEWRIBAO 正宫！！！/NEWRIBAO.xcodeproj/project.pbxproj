@@ -10,6 +10,7 @@
 		09F23F6C62672E9527CFB4B8 /* libPods-NEWRIBAO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C75D44218C3E0831B38869C /* libPods-NEWRIBAO.a */; };
 		6718607B218F336700F4EBCE /* ZRBLoadMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6718607A218F336700F4EBCE /* ZRBLoadMoreView.m */; };
 		6736950521918C1B00425A45 /* ZRBCoordinateMananger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6736950421918C1B00425A45 /* ZRBCoordinateMananger.m */; };
+		673695082191DF2400425A45 /* ZRBOnceUponDataJSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 673695072191DF2400425A45 /* ZRBOnceUponDataJSONModel.m */; };
 		673F78BB218745A60085F745 /* ZRBPushMainNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 673F78BA218745A60085F745 /* ZRBPushMainNavigationViewController.m */; };
 		673FBE662185E387000CA6BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 673FBE652185E387000CA6BD /* AppDelegate.m */; };
 		673FBE692185E387000CA6BD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 673FBE682185E387000CA6BD /* ViewController.m */; };
@@ -59,6 +60,8 @@
 		6718607A218F336700F4EBCE /* ZRBLoadMoreView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBLoadMoreView.m; sourceTree = "<group>"; };
 		6736950321918C1B00425A45 /* ZRBCoordinateMananger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZRBCoordinateMananger.h; sourceTree = "<group>"; };
 		6736950421918C1B00425A45 /* ZRBCoordinateMananger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBCoordinateMananger.m; sourceTree = "<group>"; };
+		673695062191DF2400425A45 /* ZRBOnceUponDataJSONModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZRBOnceUponDataJSONModel.h; sourceTree = "<group>"; };
+		673695072191DF2400425A45 /* ZRBOnceUponDataJSONModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBOnceUponDataJSONModel.m; sourceTree = "<group>"; };
 		673F78B9218745A60085F745 /* ZRBPushMainNavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZRBPushMainNavigationViewController.h; sourceTree = "<group>"; };
 		673F78BA218745A60085F745 /* ZRBPushMainNavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZRBPushMainNavigationViewController.m; sourceTree = "<group>"; };
 		673FBE612185E387000CA6BD /* NEWRIBAO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NEWRIBAO.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -311,6 +314,8 @@
 				673FBEDA2185F661000CA6BD /* ZRBAnalysisJSONModel.m */,
 				673FBEDC2185F6B6000CA6BD /* ZRBMainJSONModel.h */,
 				673FBEDD2185F6B6000CA6BD /* ZRBMainJSONModel.m */,
+				673695062191DF2400425A45 /* ZRBOnceUponDataJSONModel.h */,
+				673695072191DF2400425A45 /* ZRBOnceUponDataJSONModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -590,6 +595,7 @@
 				673FBEEF2185FAAB000CA6BD /* SecondaryMessageViewController.m in Sources */,
 				673FBED22185F568000CA6BD /* ZRBMessageTableViewCell.m in Sources */,
 				673FBEDE2185F6B6000CA6BD /* ZRBMainJSONModel.m in Sources */,
+				673695082191DF2400425A45 /* ZRBOnceUponDataJSONModel.m in Sources */,
 				673FBED52185F5C6000CA6BD /* ZRBMessageVView.m in Sources */,
 				673FBEE22185F74B000CA6BD /* ZRBNewsTableViewCell.m in Sources */,
 				6718607B218F336700F4EBCE /* ZRBLoadMoreView.m in Sources */,

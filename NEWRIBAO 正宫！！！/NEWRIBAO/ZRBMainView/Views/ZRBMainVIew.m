@@ -36,6 +36,9 @@
 - (void)initMainTableView
 {
     
+    //测试 出现新的cell
+    
+    
     //代理网络传值
     _cellJSONModel = [[ZRBCellModel alloc] init];
     
@@ -446,6 +449,16 @@
     }else{
         if ( cell2 == nil ){
             cell2 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"labelCell"];
+            
+            NSLog(@"_testStr == = = = %@",_testStr);
+            if ( _testStr ){
+            UILabel * label = [[UILabel alloc] init];
+                label.text = @"你好，我是中国人";
+                label.font = [UIFont systemFontOfSize:20];
+                label.frame = CGRectMake(0, 0, 200, 40);
+                [cell2.contentView addSubview:label];
+            }
+            
         }
         return cell2;
     }

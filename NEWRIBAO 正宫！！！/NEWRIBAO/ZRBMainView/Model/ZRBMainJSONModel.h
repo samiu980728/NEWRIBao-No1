@@ -11,11 +11,11 @@
 NS_ASSUME_NONNULL_BEGIN
 @interface StoriesJSONModel : JSONModel
 
-@property (nonatomic, strong) NSArray * images;
-@property (nonatomic, strong) NSString * type;
-@property (nonatomic, strong) NSString * ga_prefix;
-@property (nonatomic, strong) NSString * id;
-@property (nonatomic, strong) NSString * title;
+@property (nonatomic, copy) NSArray * images;
+@property (nonatomic, copy) NSString * type;
+@property (nonatomic, copy) NSString * ga_prefix;
+@property (nonatomic, assign) NSInteger id;
+@property (nonatomic, copy) NSString * title;
 
 @end
 
@@ -23,11 +23,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZRBMainJSONModel : JSONModel
 
-@property (nonatomic, strong) NSString * type;
-@property (nonatomic, strong) NSString * id;
-@property (nonatomic, strong) NSArray * images;
-@property (nonatomic, strong) NSString * ga_prefix;
-@property (nonatomic, strong) NSString * title;
+@property (nonatomic, copy) NSString * type;
+@property (nonatomic, assign) NSInteger  id;
+@property (nonatomic, copy) NSArray * images;
+@property (nonatomic, copy) NSString * ga_prefix;
+@property (nonatomic, copy) NSString * title;
 
 
 @end
@@ -38,8 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString * date;
 
 //解析数据
-@property (nonatomic, strong) NSArray <ZRBMainJSONModel *> * top_stories;
-@property (nonatomic, strong) NSArray <StoriesJSONModel *> * stories;
+@property (nonatomic, copy) NSArray <ZRBMainJSONModel *> * top_stories;
+@property (nonatomic, copy) NSArray <StoriesJSONModel *> * stories;
 
 @end
 NS_ASSUME_NONNULL_END

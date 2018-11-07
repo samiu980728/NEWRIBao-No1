@@ -10,6 +10,8 @@
 
 @interface ZRBMainViewController ()<UIScrollViewDelegate>
 
+@property (nonatomic, strong) UIScrollView * scrollView;
+
 @end
 
 @implementation ZRBMainViewController
@@ -18,10 +20,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    //UIScrollView * scrollView = [[UIScrollView alloc] init];
+    //scrollView.delegate = self;
+    
+    
+    //[self.view addSubview:scrollView];
+    _refreshNumInteger = 0;
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.title = @"今日新闻";
     
+    _refresh = YES;
+    
+//    _MainView.mainMessageTableView.de
     
     //以下为网络请求
 //    _mainImageMutArray = [[NSMutableArray alloc] init];
@@ -43,13 +55,21 @@
     }
     
     
+    _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    
+    _scrollView.contentSize = CGSizeMake(0, 900);
+//    _scrollView.contentSize.height = 900;
+//    _scrollView.contentSize.height = _MainView.mainMessageTableView.height;
+    _scrollView.delegate = self;
+    
+    
     _messageView = [[ZRBMessageVView alloc] init];
     
     
     
     [_messageView initTableView];
     
-    [self.view addSubview:_messageView];
+    [_scrollView addSubview:_messageView];
     
     //_viewController = [[ViewController alloc] init];
     
@@ -62,30 +82,103 @@
     
     [_MainView initMainTableView];
     
+    //    [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+    //        make.edges.equalTo(self.view);
+    //    }];
+    //[scrollView addSubview:_MainView];
+    
+    
+    //[_MainView addSubview:scrollView];
+    
     [_MainView.leftNavigationButton addTarget:self action:@selector(pressLeftBarButton:) forControlEvents:UIControlEventTouchUpInside];
     
     
     _MainView.delegate = self;
     
     
-//    //滚动视图代理方法
-//    UIScrollView * scrollowView = [[UIScrollView alloc] init];
-//    scrollowView.delegate = self;
+    //    //滚动视图代理方法
+    //    UIScrollView * scrollowView = [[UIScrollView alloc] init];
+    //    scrollowView.delegate = self;
     
-    [self.view addSubview:_MainView];
+    [_scrollView addSubview:_MainView];
     
-    [_MainView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
+    _MainView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+    
+//    [_MainView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(self.view);
+//    }];
     
     //这一下就万法皆通了么！！！！！！！！！！！
     //一直在疑惑怎么证明代理是加到ZRNMainView上的
     //这下就好了!!!
     _MainView.mainMessageTableView.delegate = self;
+//    [self scrollViewDidScroll:_scrollView];
+    //    _MainView.mainMessageTableView.de
+    [self.view addSubview:_scrollView];
+    
     [self fenethMessageFromManagerBlock];
     
+    
+    
+    //注释掉
+    
+    
+//    _messageView = [[ZRBMessageVView alloc] init];
+//
+//
+//
+//    [_messageView initTableView];
+//
+//    [self.view addSubview:_messageView];
+//
+//    //_viewController = [[ViewController alloc] init];
+//
+//    // _viewController.view.backgroundColor = [UIColor yellowColor];
+//    //[self.view addSubview:_viewController.view];
+//
+//
+//
+//    _MainView = [[ZRBMainVIew alloc] init];
+//
+//    [_MainView initMainTableView];
+//
+////    [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+////        make.edges.equalTo(self.view);
+////    }];
+//    //[scrollView addSubview:_MainView];
+//
+//
+//    //[_MainView addSubview:scrollView];
+//
+//    [_MainView.leftNavigationButton addTarget:self action:@selector(pressLeftBarButton:) forControlEvents:UIControlEventTouchUpInside];
+//
+//
+//    _MainView.delegate = self;
+//
+//
+////    //滚动视图代理方法
+////    UIScrollView * scrollowView = [[UIScrollView alloc] init];
+////    scrollowView.delegate = self;
+//
+//    [self.view addSubview:_MainView];
+//
+//    [_MainView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(self.view);
+//    }];
+//
+//    //这一下就万法皆通了么！！！！！！！！！！！
+//    //一直在疑惑怎么证明代理是加到ZRNMainView上的
+//    //这下就好了!!!
+//    _MainView.mainMessageTableView.delegate = self;
+////    _MainView.mainMessageTableView.de
+//    [self fenethMessageFromManagerBlock];
+    
+    
+    //注释掉
+    
+    
+    
 }
-
 
 //manager类网络请求
 - (void)fenethMessageFromManagerBlock
@@ -96,6 +189,9 @@
     _mainTitleMutArray = [[NSMutableArray alloc] init];
     _titleMutArray = [[NSMutableArray alloc] init];
     _imageMutArray = [[NSMutableArray alloc] init];
+    
+    //测试
+    NSString * mainTestStr = [[NSString alloc] init];
     
     [[ZRBCoordinateMananger sharedManager] fetchDataWithMainJSONModelsucceed:^(NSMutableArray *JSONModelMutArray) {
         if ( [JSONModelMutArray isKindOfClass:[NSArray class]] && JSONModelMutArray.count > 0 ){
@@ -150,6 +246,10 @@
         [_MainView.imageMutArray setArray:_mainImageMutArray];
         [_MainView.titleMutArray setArray:_mainTitleMutArray];
         
+        //mainTestStr = @"我是中国人";
+        
+        
+        
         
         NSLog(@"COntroller中的 _imageMutArray = == = = =%@",_imageMutArray);
         
@@ -175,6 +275,97 @@
     //    };
 }
 
+//- (void)scrollViewDid
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+    NSLog(@"发起上拉加载12321312321");
+    if (scrollView.bounds.size.height +  scrollView.contentOffset.y >scrollView.contentSize.height) {
+        
+        [UIView animateWithDuration:1.0 animations:^{
+            
+            scrollView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
+            
+        } completion:^(BOOL finished) {
+            
+            NSLog(@"发起上拉加载");
+            if ( _refresh ){
+                NSLog(@"发起上拉加载assdasdasdsa");
+            _MainView.testStr = @"你好,我是中国人";
+                ZRBCoordinateMananger * manager = [ZRBCoordinateMananger sharedManager];
+                //manager.ifAdoultRefreshStr = [NSString stringWithFormat:@"%@",@"用户已经刷新过一次"];
+                manager.ifAdoultRefreshStr = @"用户已经刷新过一次";
+                NSLog(@"manager.ifAdoultRefreshStr = == == = = %@",manager.ifAdoultRefreshStr);
+                [self fenethMessageFromManagerBlock];
+                
+                //目前问题：
+                //如果变成NO的话 那么她就再加载不了了
+                //加载5天的数据
+                //那么创建多个if 语句就好 创建一个数组 存储每次存入的NSString
+                //创建一个NSInteger变量 每次向下加载一次++ 一次该变量 然后在各种该变量应该具有的值
+                //1 2 3 4 5 的几种if 可能中 给昨天 前天 大前天 对应的 NSString * 类型的字符串赋值
+                
+                //刷新次数到最后一次时  给 _refresh设置为 NO 不要进入这个方法，，，
+                
+                _refresh = NO;
+            }
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                [UIView animateWithDuration:1.0 animations:^{
+                    
+                    scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+                    
+                }];
+            });
+        }];
+        
+        
+    }
+    //    if ( _MainView.analyJSONMutArray.count == 0 || _MainView.mainMessageTableView.isHidden == NO ){
+    //        return;
+    //    }
+    //
+    //    CGFloat offsetY = scrollView.contentOffset.y;
+    //
+    //    // 当最后一个cell完全显示在眼前时，contentOffset的y值
+    //
+    //
+    //    //不知道这样还能用不
+    //    //与那个博客上的赋值方法不相符合！！！！
+    //
+    //    //当最后一个CELL完全显示在眼前时
+    //    CGFloat judgeOffsetY = scrollView.contentSize.height + scrollView.contentInset.bottom - scrollView.contentSize.height - _MainView.mainMessageTableView.tableFooterView.frame.size.height;
+    //
+    //    if ( offsetY >= judgeOffsetY ){
+    //        //最后一个CELL完全进入视野
+    //        //显示footer
+    //        _MainView.mainMessageTableView.tableFooterView.hidden = NO;
+    //
+    //        //加载更多数据
+    //        //就把那个 正在加载中 弄出来
+    //
+    //        //这是那个异步请求数据的方法 不是那个UIVIew视图
+    //
+    //        //这里需要修改一下！！！！！！
+    //
+    //
+    //
+    //        //现在问题是 问崔总 下拉刷新怎么搞？？思路是什么
+    //        //还有他说的那个 写一个方法 传值 怎么搞？？？
+    //
+    //
+    //
+    //
+    //
+    //        //判断一下 最后一个CELL 网址找好了！！！
+    ////        还有这里修改一下
+    //        [_MainView loadMoreView];
+    //    }
+    
+    
+}
 
 - (void)giveCellJSONModelToMainView:(NSMutableArray *)imaMutArray andTitle:(NSMutableArray *)titMutArray
 {
@@ -204,74 +395,7 @@
     NSLog(@"****************Controlller代理协议里的  _imageMutArray = == = = = = == = %@",_mainImageMutArray);
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    
-    if (scrollView.bounds.size.height +  scrollView.contentOffset.y >scrollView.contentSize.height) {
-        
-        [UIView animateWithDuration:1.0 animations:^{
-            
-            scrollView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
-            
-        } completion:^(BOOL finished) {
-            
-            NSLog(@"发起上拉加载");
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                
-                [UIView animateWithDuration:1.0 animations:^{
-                    
-                    scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-                    
-                }];
-            });
-        }];
-        
-        
-    }
-//    if ( _MainView.analyJSONMutArray.count == 0 || _MainView.mainMessageTableView.isHidden == NO ){
-//        return;
-//    }
-//
-//    CGFloat offsetY = scrollView.contentOffset.y;
-//
-//    // 当最后一个cell完全显示在眼前时，contentOffset的y值
-//
-//
-//    //不知道这样还能用不
-//    //与那个博客上的赋值方法不相符合！！！！
-//
-//    //当最后一个CELL完全显示在眼前时
-//    CGFloat judgeOffsetY = scrollView.contentSize.height + scrollView.contentInset.bottom - scrollView.contentSize.height - _MainView.mainMessageTableView.tableFooterView.frame.size.height;
-//
-//    if ( offsetY >= judgeOffsetY ){
-//        //最后一个CELL完全进入视野
-//        //显示footer
-//        _MainView.mainMessageTableView.tableFooterView.hidden = NO;
-//
-//        //加载更多数据
-//        //就把那个 正在加载中 弄出来
-//
-//        //这是那个异步请求数据的方法 不是那个UIVIew视图
-//
-//        //这里需要修改一下！！！！！！
-//
-//
-//
-//        //现在问题是 问崔总 下拉刷新怎么搞？？思路是什么
-//        //还有他说的那个 写一个方法 传值 怎么搞？？？
-//
-//
-//
-//
-//
-//        //判断一下 最后一个CELL 网址找好了！！！
-////        还有这里修改一下
-//        [_MainView loadMoreView];
-//    }
-    
-    
-}
+
 
 - (void)pushToWKWebView
 {

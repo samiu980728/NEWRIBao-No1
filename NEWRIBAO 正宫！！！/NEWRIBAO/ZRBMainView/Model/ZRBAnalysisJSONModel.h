@@ -11,7 +11,7 @@
 
 @interface ZRBAnalysisJSONModel : NSObject
 
-@property (nonatomic, strong) NSString * testUrlStr;
+@property (nonatomic, copy) NSString * testUrlStr;
 
 @property (nonatomic, strong) NSURL * testUrl;
 
@@ -25,7 +25,7 @@
 
 @property (nonatomic, strong) NSMutableArray * JSONModelMut;
 
-@property (nonatomic, strong) NSString * nowDateStr;
+@property (nonatomic, copy) NSString * nowDateStr;
 
 @property (nonatomic, strong) TotalJSONModel * totalJSONModel;
 
@@ -36,7 +36,7 @@
 @property (nonatomic, strong) NSMutableArray * testUrlMutArray;
 
 //昨天
-@property (nonatomic, strong) NSString * testUrlStr1;
+@property (nonatomic, copy) NSString * testUrlStr1;
 
 @property (nonatomic, strong) NSURL * testUrl1;
 

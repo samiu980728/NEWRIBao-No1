@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "ZRBMainJSONModel.h"
 
+
+
+
 typedef void(^ZRBGetJSONModelHandle)(NSMutableArray * JSONModelMutArray);
 
 //请求失败回调block
@@ -18,7 +21,7 @@ typedef void(^ErrorHandle)(NSError *error);
 @interface ZRBCoordinateMananger : NSObject
 
 
-@property (nonatomic, strong) NSString * testUrlStr;
+@property (nonatomic, copy) NSString * testUrlStr;
 
 @property (nonatomic, strong) NSURL * testUrl;
 
@@ -32,7 +35,7 @@ typedef void(^ErrorHandle)(NSError *error);
 
 @property (nonatomic, strong) NSMutableArray * JSONModelMut;
 
-@property (nonatomic, strong) NSString * nowDateStr;
+@property (nonatomic, copy) NSString * nowDateStr;
 
 @property (nonatomic, strong) TotalJSONModel * totalJSONModel;
 
@@ -43,6 +46,14 @@ typedef void(^ErrorHandle)(NSError *error);
 @property (nonatomic, strong) NSMutableArray * testUrlMutArray;
 
 
+//获取当前日期 为了
+@property (nonatomic, copy) NSString * beforeDateStr;
+
+//为了区别用户是否已经进行下拉刷新操作
+@property (nonatomic, copy) NSString * ifAdoultRefreshStr;
+
+//存储日期的数组
+@property (nonatomic, strong) NSMutableArray * dateMutArray;
 
 + (instancetype)sharedManager;
 

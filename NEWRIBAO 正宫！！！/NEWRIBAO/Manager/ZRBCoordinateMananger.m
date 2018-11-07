@@ -16,6 +16,8 @@ static ZRBCoordinateMananger * manager = nil;
 + (id)sharedManager
 {
     //static ZRBCoordinateMananger * manager = nil;
+    //_beforeDateStr = [[NSString alloc] init];
+    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [[self alloc] init];
@@ -25,8 +27,60 @@ static ZRBCoordinateMananger * manager = nil;
 
 - (void)fetchDataWithMainJSONModelsucceed:(ZRBGetJSONModelHandle)succeedBlock error:(ErrorHandle)errorBlock
 {
+    //用这一个方法就行了感觉？？？
+    //新建一个NSString * 类型的
+    //如果他为空 那么请求最新数据 同时把最新数据的date值赋值给这个 str
+    //此时str不为空  那么执行另外一种网络请求 返回的都是NSMUtableArray类型数组
+    
+    //然后在Controller层 调用 didScriolleView 方法中 那个判断 括号里面 再次调用 这个块中的 方法即可
+    //这样请求到的网络数据就是往日的数据
+    //然后在View层 返回的行数 是 要创建一个总的 NSMUtableArray 每次请求一次数据 把这次数据的所有东西作为一个单元传入这个数组中（当成一个单元）
+    //然后每次reloadData 重走代理的那些方法的时候 就可以返回这个数组的count值
+    
+    
+    //下来该怎么做？
+
+    
+    NSLog(@"_ifAdoultRefreshStr 这里面的 = == = = == = = = %@",_ifAdoultRefreshStr);
+    
+    if ( _ifAdoultRefreshStr ){
+        NSLog(@"成功调用之前的信息====-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+        //把下面那个else 可能去掉
+        //
+        //把date 存入一个数组中 然后 for 循环这个数组
+        for (int i = 0; i < _dateMutArray.count; i++) {
+            _testUrlStr = [NSString stringWithFormat:@"https://news-at.zhihu.com/api/4/news/before/%@",_dateMutArray[i]];
+            
+            _testUrlStr = [_testUrlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            
+            _testUrl = [NSURL URLWithString:_testUrlStr];
+            
+            _testRequest = [NSURLRequest requestWithURL:_testUrl];
+            
+            _nowDateStr = [[NSString alloc] init];
+            
+            _testSession = [NSURLSession sharedSession];
+            
+            //继续复制下去
+            
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+        
+        NSLog(@"继续调用原网络请求");
     _testUrlStr = @"https://news-at.zhihu.com/api/4/news/latest";
     
+        //创建判断str
+        _ifAdoultRefreshStr = [[NSString alloc] init];
+        
     _testUrlStr = [_testUrlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     _testUrl = [NSURL URLWithString:_testUrlStr];
@@ -59,6 +113,16 @@ static ZRBCoordinateMananger * manager = nil;
             _totalJSONModel = [[TotalJSONModel alloc] initWithDictionary:_obj error:nil];
 
             _JSONModelMut = [[NSMutableArray alloc] init];
+            
+            _dateMutArray = [[NSMutableArray alloc] init];
+            
+            _beforeDateStr = [NSString stringWithFormat:@"%@",_totalJSONModel.date];
+            
+            [_dateMutArray addObject:_beforeDateStr];
+            
+            //好了 解析成功
+            NSLog(@"_beforeDateStr == = = = = %@",_beforeDateStr);
+            
 
             for (int i = 0; i < _totalJSONModel.stories.count; i++) {
                 _storiesJSONModel = [[StoriesJSONModel alloc] initWithDictionary:_obj[@"stories"][i] error:nil];
@@ -100,6 +164,7 @@ static ZRBCoordinateMananger * manager = nil;
         
     }];
     [_testDataTask resume];
+    
 }
 
 @end
