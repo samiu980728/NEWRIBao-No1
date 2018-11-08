@@ -513,11 +513,16 @@
     
     //NSLog(@"_analyJSONMutArray.count === =   %li",_analyJSONMutArray.count);
     //注意 这个根据 数组的count数量决定
+    
     return _analyJSONMutArray.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    ZRBCoordinateMananger * manager = [ZRBCoordinateMananger sharedManager];
+    
+    NSLog(@"manager.dateMutArray.count = %li",manager.dateMutArray.count);
+    return manager.dateMutArray.count + 0;
     return 3;
 }
 

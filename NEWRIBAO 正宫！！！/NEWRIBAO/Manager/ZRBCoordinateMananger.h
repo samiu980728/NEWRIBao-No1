@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ZRBMainJSONModel.h"
-
+#import "ZRBOnceUponDataJSONModel.h"
 
 
 
@@ -54,6 +54,18 @@ typedef void(^ErrorHandle)(NSError *error);
 
 //存储日期的数组
 @property (nonatomic, strong) NSMutableArray * dateMutArray;
+
+//存储往日各类消息的数组
+@property (nonatomic, strong) NSMutableArray * beforeJSONModelMut;
+
+@property (nonatomic, strong) ZRBOnceUponDataJSONModel * beforeOnecUponDataJSONModel;
+
+@property (nonatomic, strong) ZRBStoriesGoJSONModel * beforeStoriesGoJSONModel;
+
+//这个不需要
+//@property (nonatomic, strong) StoriesJSONModel * beforeStoriesJSONModel;
+
+@property (nonatomic, strong) NSDictionary * beforeObj;
 
 + (instancetype)sharedManager;
 

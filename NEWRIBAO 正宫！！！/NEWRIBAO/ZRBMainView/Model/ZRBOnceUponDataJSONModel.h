@@ -26,6 +26,6 @@
 
 @property (nonatomic, copy) NSString * date;
 
-@property (nonatomic, copy) NSArray <ZRBStoriesGoJSONModel *> * storiesArray;
+@property (nonatomic, copy) NSArray <ZRBStoriesGoJSONModel *> * stories;
 
 @end

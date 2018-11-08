@@ -45,11 +45,62 @@ static ZRBCoordinateMananger * manager = nil;
     
     if ( _ifAdoultRefreshStr ){
         NSLog(@"成功调用之前的信息====-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+        //重新写一个方法 一次就把三天的日期取得
+        //然后就不用每次看完一个日期 就必须刷新一次了 可以每次刷新显示好几天的日期
+        
+        NSInteger j = 4;
+        NSInteger i = 0;
+        while (i < j) {
+            NSLog(@"每次循环中的_dateMutArray = %@",_dateMutArray);
+            if ( _dateMutArray.count-1 == i )
+            if ( _dateMutArray[i] ){
+            _testUrlStr = [NSString stringWithFormat:@"https://news-at.zhihu.com/api/4/news/before/%@",[NSString stringWithFormat:@"%@",_dateMutArray[i]]];
+            _testUrlStr = [_testUrlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            
+            _testUrl = [NSURL URLWithString:_testUrlStr];
+            
+            _testRequest = [NSURLRequest requestWithURL:_testUrl];
+            
+            _nowDateStr = [[NSString alloc] init];
+            
+            _testSession = [NSURLSession sharedSession];
+            
+            _testDataTask = [_testSession dataTaskWithRequest:_testRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                if ( error == nil ){
+                    _beforeObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                    
+                    _beforeOnecUponDataJSONModel = [[ZRBOnceUponDataJSONModel alloc] initWithDictionary:_beforeObj error:nil];
+                    [_dateMutArray addObject:_beforeOnecUponDataJSONModel.date];
+                }else{
+                    if (error) {
+                        errorBlock(error);
+                    }
+                }
+            }];
+            [_testDataTask resume];
+            
+            i++;
+            }
+        }
+        
+        
+        //终于把三个日期都添加上去了
+        //下一步 就是 把数组值赋值给 cell 的scetion 然后把数据一并赋值过去！！！
+        
+        
+        
+        
+        NSLog(@"一口气四个日期  _dateMutArray = %@",_dateMutArray);
+        
+        
+        
         //把下面那个else 可能去掉
         //
         //把date 存入一个数组中 然后 for 循环这个数组
         for (int i = 0; i < _dateMutArray.count; i++) {
             _testUrlStr = [NSString stringWithFormat:@"https://news-at.zhihu.com/api/4/news/before/%@",_dateMutArray[i]];
+            
+            NSLog(@"_testUrlStr = %@",_testUrlStr);
             
             _testUrlStr = [_testUrlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
             
@@ -62,7 +113,96 @@ static ZRBCoordinateMananger * manager = nil;
             _testSession = [NSURLSession sharedSession];
             
             //继续复制下去
+            _testDataTask = [_testSession dataTaskWithRequest:_testRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                if ( error == nil ){
+                    _beforeObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                   // NSLog(@"_beforeObj = == = == %@ ",_beforeObj);
+                    
+                    NSLog(@"_beforeObj[date] = == %@ ",_beforeObj);
+                    
+                    //_beforeOnecUponDataJSONModel = [[ZRBOnceUponDataJSONModel alloc] initWithDictionary:_beforeObj error:nil];
+                    _beforeOnecUponDataJSONModel = [[ZRBOnceUponDataJSONModel alloc] initWithDictionary:_beforeObj error:nil];
+                    
+//                    _beforeOnecUponDataJSONModel = [[ZRBOnceUponDataJSONModel alloc] init];
+//                    [_beforeOnecUponDataJSONModel initWithDictionary:_beforeObj error:nil];
+                    
+                    NSLog(@"_beforeOnecUponDataJSONModel = == = ==  %@",_beforeOnecUponDataJSONModel);
+                    
+                    
+                    
+                    //血的教训！！！ 弄JSONMOdel类适配时必须要按接口给的名字来 不要自己瞎命名
+                    // 人家接口给的是 stories 不要自作主张的弄成 storiesArray名字 到时候就匹配不上了！！！
+                    //NSArray <ZRBStoriesGoJSONModel *> * stories;
+                    
+                    //血的教训！！！ 弄JSONMOdel类适配时必须要按接口给的名字来 不要自己瞎命名
+                    // 人家接口给的是 stories 不要自作主张的弄成 storiesArray名字 到时候就匹配不上了！！！
+                    //NSArray <ZRBStoriesGoJSONModel *> * stories;
+                    
+                    //血的教训！！！ 弄JSONMOdel类适配时必须要按接口给的名字来 不要自己瞎命名
+                    // 人家接口给的是 stories 不要自作主张的弄成 storiesArray名字 到时候就匹配不上了！！！
+                    //NSArray <ZRBStoriesGoJSONModel *> * stories;
+                    
+                    
+                    //血的教训！！！ 弄JSONMOdel类适配时必须要按接口给的名字来 不要自己瞎命名
+                    // 人家接口给的是 stories 不要自作主张的弄成 storiesArray名字 到时候就匹配不上了！！！
+                    //NSArray <ZRBStoriesGoJSONModel *> * stories;
+                    
+                    //血的教训！！！ 弄JSONMOdel类适配时必须要按接口给的名字来 不要自己瞎命名
+                    // 人家接口给的是 stories 不要自作主张的弄成 storiesArray名字 到时候就匹配不上了！！！
+                    //NSArray <ZRBStoriesGoJSONModel *> * stories;
+                    
+                    _beforeJSONModelMut = [[NSMutableArray alloc] init];
+                    
+                    _beforeDateStr = [NSString stringWithFormat:@"%@",_beforeOnecUponDataJSONModel.date];
+                    
+                    
+                    [_dateMutArray addObject:_beforeDateStr];
+                    
+                    NSLog(@"_dateMutArray.count ==  %li",_dateMutArray.count);
+                    
+                    NSLog(@"_dateMutArray = %@",_dateMutArray);
+                    
+                    NSLog(@"for循环里面的_beforeDateStr = == =  %@",_beforeDateStr);
+                    
+                    NSLog(@"_beforeOnecUponDataJSONModel.stories.count === %li",_beforeOnecUponDataJSONModel.stories.count);
+                    
+                    for (int i = 0; i < _beforeOnecUponDataJSONModel.stories.count; i++) {
+                        _beforeStoriesGoJSONModel = [[ZRBStoriesGoJSONModel alloc] initWithDictionary:_beforeObj[@"stories"][i] error:nil];
+                        NSLog(@"_beforeStoriesGoJSONModel == =  %@",_beforeStoriesGoJSONModel);
+                        
+                        
+                        //这是一天的数据
+                        if ( _beforeStoriesGoJSONModel ){
+                            [_beforeJSONModelMut addObject:_beforeStoriesGoJSONModel];
+                        }
+                    }
+                    
+                    
+                    //请求数据完毕 接下来
+                    //想一个办法 根据请求数据的 _beforeJSONModelMut.count 值 创建section 的数量
+                    //然后 把_beforeJSONModelMut 的值解析成 title 和image赋值给对应的cell中 即可
+                    //然后把 日期的值 赋值给 每个section 的 headerView 的 Label.text 即可
+                    
+                    //后天 做导航栏渐变
+                    
+                    
+                    
+                    
+
+                    
+                    NSLog(@"for循环中 每次网络请求到的 _beforeJSONModelMut  = == = =   = = 9 09  %@",_beforeJSONModelMut);
+                    
+                    succeedBlock(_beforeJSONModelMut);
+                }else{
+                    if ( error ){
+                        errorBlock(error);
+                    }
+                }
+            }];
             
+            
+            //请求执行任务
+            [_testDataTask resume];
         }
         
         
@@ -114,14 +254,20 @@ static ZRBCoordinateMananger * manager = nil;
 
             _JSONModelMut = [[NSMutableArray alloc] init];
             
+            if ( !_dateMutArray ){
             _dateMutArray = [[NSMutableArray alloc] init];
+            }
             
             _beforeDateStr = [NSString stringWithFormat:@"%@",_totalJSONModel.date];
             
+            if ( _dateMutArray.count == 0 ){
             [_dateMutArray addObject:_beforeDateStr];
+                
+            }
+            NSLog(@"aaa_beforeDateStr = %@",_beforeDateStr);
             
             //好了 解析成功
-            NSLog(@"_beforeDateStr == = = = = %@",_beforeDateStr);
+            //NSLog(@"_beforeDateStr == = = = = %@",_beforeDateStr);
             
 
             for (int i = 0; i < _totalJSONModel.stories.count; i++) {
